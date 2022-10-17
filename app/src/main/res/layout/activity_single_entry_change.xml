@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SingleEntryChange">
+
+    <TextView
+        android:id="@+id/tvHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Изменение одной записи"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/etManufacturer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Фирма"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf = "@+id/tvHeading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/etModel"
+        />
+
+    <EditText
+        android:id="@+id/etModel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Модель"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf = "@+id/tvHeading"
+        app:layout_constraintStart_toEndOf="@+id/etManufacturer"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/etColour"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Цвет"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/etManufacturer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/etPrice"/>
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Цена"
+        android:inputType="date"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etColour"
+        app:layout_constraintTop_toBottomOf="@+id/etModel"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivPicture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvDeletePicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPrice" />
+
+    <TextView
+        android:id="@+id/tvDeletePicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Удалить картинку"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/buttonChanging"
+        app:layout_constraintTop_toBottomOf="@+id/ivPicture"
+        tools:layout_editor_absoluteX="10dp" />
+
+    <TableRow
+        android:id="@+id/buttonChanging"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/Exit"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUpd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/batton_background"
+            android:text="Изменить" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/batton_background"
+            android:text="Удалить" />
+    </TableRow>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/batton_background"
+        android:onClick="Exit"
+        android:text="Назад"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

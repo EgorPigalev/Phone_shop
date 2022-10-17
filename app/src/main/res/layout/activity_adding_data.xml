@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddingData">
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Добавление записи"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/etManufacturer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Фирма"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf = "@+id/heading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/etModel"
+        />
+
+    <EditText
+        android:id="@+id/etModel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Модель"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf = "@+id/heading"
+        app:layout_constraintStart_toEndOf="@+id/etManufacturer"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/etColour"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Цвет"
+        android:inputType="textCapWords"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/etManufacturer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/etPrice"/>
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Цена"
+        android:inputType="date"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/etColour"
+        app:layout_constraintTop_toBottomOf="@+id/etModel"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivPicture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/absence"
+        app:layout_constraintBottom_toTopOf="@+id/tvdeletePicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPrice" />
+
+    <TextView
+        android:id="@+id/tvdeletePicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Удалить картинку"
+        android:visibility="gone"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/buttonChanging"
+        app:layout_constraintTop_toBottomOf="@+id/ivPicture"
+        tools:layout_editor_absoluteX="10dp" />
+
+    <TableRow
+        android:id="@+id/buttonChanging"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUpd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/batton_background"
+            android:text="Добавить" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/batton_background"
+            android:onClick="Exit"
+            android:text="Назад" />
+    </TableRow>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

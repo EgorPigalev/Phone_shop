@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Магазин телефонов</string>
+    <string-array name="fieldsNameSearch">
+        <item>Фирма</item>
+        <item>Модель</item>
+        <item>Цвет</item>
+    </string-array>
+    <string-array name="fieldsName">
+        <item></item>
+        <item>Фирма</item>
+        <item>Модель</item>
+        <item>Цвет</item>
+        <item>Цена</item>
+    </string-array>
+    <string-array name="order">
+        <item>Возрастание</item>
+        <item>Убывание</item>
+    </string-array>
+</resources>
