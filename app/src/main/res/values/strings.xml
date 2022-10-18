@@ -12,6 +12,30 @@
         <item>Цвет</item>
         <item>Цена</item>
     </string-array>
+    <string-array name="fieldsNameManufacturer">
+        <item></item>
+        <item>Модель</item>
+        <item>Цвет</item>
+        <item>Цена</item>
+    </string-array>
+    <string-array name="fieldsNameModel">
+        <item></item>
+        <item>Фирма</item>
+        <item>Цвет</item>
+        <item>Цена</item>
+    </string-array>
+    <string-array name="fieldsNameColour">
+        <item></item>
+        <item>Фирма</item>
+        <item>Модель</item>
+        <item>Цена</item>
+    </string-array>
+    <string-array name="fieldsNamePrice">
+        <item></item>
+        <item>Фирма</item>
+        <item>Модель</item>
+        <item>Цвет</item>
+    </string-array>
     <string-array name="order">
         <item>Возрастание</item>
         <item>Убывание</item>

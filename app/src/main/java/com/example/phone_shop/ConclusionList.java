@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 
 import org.json.JSONArray;
@@ -108,5 +110,4 @@ public class ConclusionList extends AppCompatActivity {
             tlSearch.setVisibility(View.VISIBLE);
         }
     }
-
 }
