@@ -10,7 +10,7 @@
         android:id="@+id/tvHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Изменение одной записи"
+        android:text="@string/single_entry_change"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -19,7 +19,7 @@
         android:id="@+id/etManufacturer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Фирма"
+        android:hint="@string/firm"
         android:inputType="textCapWords"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf = "@+id/tvHeading"
@@ -31,7 +31,7 @@
         android:id="@+id/etModel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Модель"
+        android:hint="@string/model"
         android:inputType="textCapWords"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf = "@+id/tvHeading"
@@ -43,7 +43,7 @@
         android:id="@+id/etColour"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Цвет"
+        android:hint="@string/colour"
         android:inputType="textCapWords"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/etManufacturer"
@@ -54,7 +54,7 @@
         android:id="@+id/etPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Цена"
+        android:hint="@string/price"
         android:inputType="date"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/etColour"
@@ -66,6 +66,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="20dp"
+        android:onClick="updatePicture"
         android:src="@drawable/absence"
         app:layout_constraintBottom_toTopOf="@+id/tvDeletePicture"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,8 +78,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Удалить картинку"
+        android:onClick="deletePicture"
+        android:text="@string/delete_picture"
         android:textAlignment="center"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/buttonChanging"
         app:layout_constraintTop_toBottomOf="@+id/ivPicture"
         tools:layout_editor_absoluteX="10dp" />
@@ -99,7 +102,8 @@
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/batton_background"
-            android:text="Изменить" />
+            android:onClick="updateLine"
+            android:text="@string/update" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDelete"
@@ -108,7 +112,8 @@
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/batton_background"
-            android:text="Удалить" />
+            android:onClick="deleteLine"
+            android:text="@string/delete" />
     </TableRow>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -118,7 +123,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/batton_background"
         android:onClick="Exit"
-        android:text="Назад"
+        android:text="@string/exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

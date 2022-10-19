@@ -32,7 +32,7 @@ public class AddingData extends AppCompatActivity {
     EditText textManufacturer, textModel, textColour, textPrice;
     TextView deletePicture;
     ImageView image;
-    String varcharPicture = null;
+    String varcharPicture;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -55,7 +55,7 @@ public class AddingData extends AppCompatActivity {
                         imageView.setImageBitmap(bitmap);
                         TextView deletePicture = findViewById(R.id.tvdeletePicture);
                         deletePicture.setVisibility(View.VISIBLE);
-                        String varcharPicture = BitMapToString(bitmap);
+                        varcharPicture = BitMapToString(bitmap);
                     }
                 }
             });
@@ -80,33 +80,34 @@ public class AddingData extends AppCompatActivity {
         textPrice = findViewById(R.id.etPrice);
         image = findViewById(R.id.ivPicture);
         deletePicture = findViewById(R.id.tvdeletePicture);
+        varcharPicture = null;
 
         textManufacturer.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
                 textManufacturer.setHint("");
             else
-                textManufacturer.setHint("Фирма");
+                textManufacturer.setHint(R.string.firm);
         });
 
         textModel.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
                 textModel.setHint("");
             else
-                textModel.setHint("Модель");
+                textModel.setHint(R.string.model);
         });
 
         textColour.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
                 textColour.setHint("");
             else
-                textColour.setHint("Цвет");
+                textColour.setHint(R.string.colour);
         });
 
         textPrice.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
                 textPrice.setHint("");
             else
-                textPrice.setHint("Цена");
+                textPrice.setHint(R.string.price);
         });
     }
 
@@ -121,7 +122,13 @@ public class AddingData extends AppCompatActivity {
             BaseData baseData = new BaseData();
             connection = baseData.connectionClass();
             if(connection != null) {
-                String query = "Insert into Phones(manufacturer, model, colour, price, image) Values('" + textManufacturer.getText() + "', '" + textModel.getText() + "', '" + textColour.getText() + "', '" + textPrice.getText() + "', '" + varcharPicture + "')";
+                String query = "";
+                if(varcharPicture == null){
+                    query = "Insert into Phones(manufacturer, model, colour, price) Values('" + textManufacturer.getText() + "', '" + textModel.getText() + "', '" + textColour.getText() + "', '" + textPrice.getText() + "')";
+                }
+                else{
+                    query = "Insert into Phones(manufacturer, model, colour, price, image) Values('" + textManufacturer.getText() + "', '" + textModel.getText() + "', '" + textColour.getText() + "', '" + textPrice.getText() + "', '" + varcharPicture + "')";
+                }
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(query);
                 Toast.makeText(this, "Запись успешно добавлена в базу", Toast.LENGTH_LONG).show();
@@ -160,5 +167,4 @@ public class AddingData extends AppCompatActivity {
         picture.setImageResource(R.drawable.absence);
         deletePicture.setVisibility(View.INVISIBLE);
     }
-
 }

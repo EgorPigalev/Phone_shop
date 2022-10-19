@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="База данных телефонов"
+        android:text="@string/database"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:background="@drawable/batton_background"
             android:onClick="Exit"
-            android:text="Назад" />
+            android:text="@string/exit" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSearch"
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:background="@drawable/batton_background"
             android:onClick="TextBlockVisibility"
-            android:text="Фильтр ▼" />
+            android:text="@string/filter_closed" />
     </TableRow>
 
     <TableLayout
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:hint="Введите значение"
+                android:hint="@string/enter_value"
                 android:textAlignment="center" />
 
         </TableRow>
@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Сортировка по столбцам"
+                android:text="@string/sort_by_columns"
                 android:textAlignment="center" />
 
         </TableRow>
@@ -151,7 +151,7 @@
         android:id="@+id/tvDeleteSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Удалить сортировку и поиск"
+        android:text="@string/delete_search"
         android:visibility="gone"
         android:layout_margin="5dp"
         android:textAlignment="center"
@@ -173,7 +173,7 @@
         android:id="@+id/tvHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Для изменения или удаления записи кликните на неё"
+        android:text="@string/hint"
         android:layout_margin="5dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
