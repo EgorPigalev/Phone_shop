@@ -43,6 +43,18 @@
         app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDeleteBase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/batton_background"
+        android:onClick="DeleteBase"
+        android:text="Очистить базу данных"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUpd" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnExit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +64,7 @@
         android:text="@string/exit_the_program"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUpd" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDeleteBase" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,12 +30,16 @@ import java.util.List;
 
 public class ConclusionList extends AppCompatActivity {
 
-    //private AdapterMask pAdapter;
-    //private List<Mask> listPhone = new ArrayList<>();
+    private AdapterMask pAdapter;
+    private List<Mask> listPhone = new ArrayList<>();
+
+    /*
     Connection connection;
     List<Mask> data;
     ListView listView;
     AdapterMask pAdapter;
+
+     */
     EditText textSearch;
 
     @Override
@@ -43,12 +47,12 @@ public class ConclusionList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conclusion_list);
 
-        /*
+
         ListView ivProducts = findViewById(R.id.lvData);
         pAdapter = new AdapterMask(ConclusionList.this, listPhone);
         ivProducts.setAdapter(pAdapter);
 
-         */
+
 
         textSearch = findViewById(R.id.etSearch);
 
@@ -59,30 +63,32 @@ public class ConclusionList extends AppCompatActivity {
                 textSearch.setHint(R.string.enter_value);
         });
 
-        RequestExecution("Select * From Phones");
-        //new GetPhones().execute();
+        //RequestExecution("Select * From Phones");
+        new GetPhones().execute();
     }
 
-    /*
+
     private class GetPhones extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
 
-                URL url = new URL("http://localhost:53670/Phones");
+                URL url = new URL("http://ssfb.ngknn.local/NGKNN/ПигалевЕД/api/Phones");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder result = new StringBuilder();
                 String line = "";
 
-                while ((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null)
+                {
                     result.append(line);
                 }
                 return result.toString();
-
-            } catch (Exception exception) {
+            }
+            catch (Exception exception)
+            {
                 return null;
             }
         }
@@ -114,7 +120,7 @@ public class ConclusionList extends AppCompatActivity {
             }
         }
     }
-     */
+    /*
     public void enterMobile() {
         pAdapter.notifyDataSetInvalidated();
         listView.setAdapter(pAdapter);
@@ -163,6 +169,8 @@ public class ConclusionList extends AppCompatActivity {
         }
         enterMobile();
     }
+
+     */
 
     public void Go(int id)
     {
