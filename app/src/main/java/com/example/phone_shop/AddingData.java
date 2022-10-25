@@ -146,7 +146,7 @@ public class AddingData extends AppCompatActivity {
         }
     }
 
-    public void Exit(View view)
+    public void Back(View view)
     {
         startActivity(new Intent(this, MainActivity.class));
     }

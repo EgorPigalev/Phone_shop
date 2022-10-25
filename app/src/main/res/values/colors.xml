@@ -10,4 +10,5 @@
     <color name="colar">#DD9B5B</color>
     <color name="colarDark">#A46F3B</color>
     <color name="colarButton">#FDD9B5</color>
+    <color name="colarButtonActive">#D8B490</color>
 </resources>

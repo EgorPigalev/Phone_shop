@@ -6,46 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".ConclusionList">
 
-    <TextView
-        android:id="@+id/tvHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/database"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TableRow
-        android:id="@+id/trButton"
+        android:id="@+id/trHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeader"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="10dp"
         android:layout_weight="1">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnExit"
+            android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:background="@drawable/batton_background"
-            android:onClick="Exit"
-            android:text="@string/exit" />
+            android:layout_weight="2"
+            android:background="@drawable/button_background"
+            android:onClick="Back"
+            android:text="@string/back" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSearch"
+        <TextView
+            android:id="@+id/tvHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:background="@drawable/batton_background"
-            android:onClick="TextBlockVisibility"
-            android:text="@string/filter_closed" />
+            android:layout_weight="5"
+            android:text="@string/database"
+            android:textAlignment="center"
+            android:textSize="20dp"/>
+
     </TableRow>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_background"
+        android:onClick="TextBlockVisibility"
+        android:text="@string/filter_closed"
+        app:layout_constraintTop_toBottomOf="@+id/trHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TableLayout
         android:id="@+id/tlSearch"
@@ -54,7 +56,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/trButton">
+        app:layout_constraintTop_toBottomOf="@id/btnSearch">
         <TableRow
             android:layout_margin="5dp"
             android:layout_weight="1">

@@ -10,7 +10,7 @@
     <string name="price">Цена</string>
     <string name="delete_picture">Удалить картинку</string>
     <string name="add">Добавить</string>
-    <string name="exit">Назад</string>
+    <string name="back">◄ Назад</string>
     <string name="database">База данных телефонов</string>
     <string name="filter_closed">Фильтр ▼</string>
     <string name="filter_open">Фильтр ▲</string>

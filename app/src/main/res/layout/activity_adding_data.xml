@@ -4,17 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="UpdatePicture"
     tools:context=".AddingData">
 
-    <TextView
-        android:id="@+id/heading"
+    <TableRow
+        android:id="@+id/trHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Добавление записи"
-        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_weight="2"
+            android:background="@drawable/button_background"
+            android:onClick="Back"
+            android:text="@string/back"/>
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Добавление записи"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:layout_weight="5"/>
+
+    </TableRow>
 
     <EditText
         android:id="@+id/etManufacturer"
@@ -25,7 +46,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@id/etModel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heading" />
+        app:layout_constraintTop_toBottomOf="@+id/trHeading" />
 
     <EditText
         android:id="@+id/etModel"
@@ -36,7 +57,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/etManufacturer"
-        app:layout_constraintTop_toBottomOf="@+id/heading" />
+        app:layout_constraintTop_toBottomOf="@+id/trHeading" />
 
     <EditText
         android:id="@+id/etColour"
@@ -54,7 +75,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/price"
-        android:inputType="date"
+        android:inputType="numberDecimal"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/etColour"
@@ -65,6 +86,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="20dp"
+        android:onClick="UpdatePicture"
         android:src="@drawable/absence"
         app:layout_constraintBottom_toTopOf="@+id/tvdeletePicture"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,38 +102,20 @@
         android:text="@string/delete_picture"
         android:textAlignment="center"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/buttonChanging"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
         app:layout_constraintTop_toBottomOf="@+id/ivPicture"
         tools:layout_editor_absoluteX="10dp" />
 
-    <TableRow
-        android:id="@+id/buttonChanging"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnUpd"
-            android:layout_width="0dp"
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:background="@drawable/batton_background"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_background"
             android:onClick="AddData"
-            android:text="@string/add" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnDelete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:background="@drawable/batton_background"
-            android:onClick="Exit"
-            android:text="@string/exit" />
-    </TableRow>
+            android:text="@string/add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

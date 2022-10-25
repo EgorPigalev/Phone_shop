@@ -138,7 +138,7 @@ public class SingleEntryChange extends AppCompatActivity {
         GetData();
     }
 
-    public void Exit(View view)
+    public void Back(View view)
     {
         startActivity(new Intent(this, ConclusionList.class));
     }
@@ -212,7 +212,7 @@ public class SingleEntryChange extends AppCompatActivity {
         {
             Toast.makeText(this, "При удаление данных возникла ошибка", Toast.LENGTH_LONG).show();
         }
-        Exit(v);
+        Back(v);
     }
 
     public void updateLine(View v)
@@ -242,7 +242,7 @@ public class SingleEntryChange extends AppCompatActivity {
         {
             Toast.makeText(this, "При изменение данных в БД возникла ошибка", Toast.LENGTH_LONG).show();
         }
-        Exit(v);
+        Back(v);
     }
 
     public void updatePicture(View v)

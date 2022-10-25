@@ -30,16 +30,18 @@ import java.util.List;
 
 public class ConclusionList extends AppCompatActivity {
 
-    private AdapterMask pAdapter;
+    /*private AdapterMask pAdapter;
     private List<Mask> listPhone = new ArrayList<>();
 
-    /*
+     */
+
+
     Connection connection;
     List<Mask> data;
     ListView listView;
     AdapterMask pAdapter;
 
-     */
+
     EditText textSearch;
 
     @Override
@@ -48,9 +50,11 @@ public class ConclusionList extends AppCompatActivity {
         setContentView(R.layout.activity_conclusion_list);
 
 
-        ListView ivProducts = findViewById(R.id.lvData);
+        /*ListView ivProducts = findViewById(R.id.lvData);
         pAdapter = new AdapterMask(ConclusionList.this, listPhone);
         ivProducts.setAdapter(pAdapter);
+
+         */
 
 
 
@@ -63,11 +67,11 @@ public class ConclusionList extends AppCompatActivity {
                 textSearch.setHint(R.string.enter_value);
         });
 
-        //RequestExecution("Select * From Phones");
-        new GetPhones().execute();
+        RequestExecution("Select * From Phones");
+        //new GetPhones().execute();
     }
 
-
+/*
     private class GetPhones extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -120,7 +124,8 @@ public class ConclusionList extends AppCompatActivity {
             }
         }
     }
-    /*
+    */
+
     public void enterMobile() {
         pAdapter.notifyDataSetInvalidated();
         listView.setAdapter(pAdapter);
@@ -170,7 +175,7 @@ public class ConclusionList extends AppCompatActivity {
         enterMobile();
     }
 
-     */
+
 
     public void Go(int id)
     {
@@ -182,7 +187,7 @@ public class ConclusionList extends AppCompatActivity {
         finish();
     }
 
-    public void Exit(View view)
+    public void Back(View view)
     {
         startActivity(new Intent(this, MainActivity.class));
     }

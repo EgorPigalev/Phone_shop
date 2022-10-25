@@ -18,12 +18,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/phone_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mainHeader"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/batton_background"
+        android:background="@drawable/button_background"
         android:onClick="NextAdd"
         android:text="@string/add_new_record"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/batton_background"
+        android:background="@drawable/button_background"
         android:onClick="NextConclusionList"
         android:text="@string/output_data"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/batton_background"
+        android:background="@drawable/button_background"
         android:onClick="DeleteBase"
         android:text="Очистить базу данных"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/batton_background"
+        android:background="@drawable/button_background"
         android:onClick="Exit"
         android:text="@string/exit_the_program"
         app:layout_constraintEnd_toEndOf="parent"
