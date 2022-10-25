@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,17 +31,10 @@ import java.util.List;
 
 public class ConclusionList extends AppCompatActivity {
 
-    /*private AdapterMask pAdapter;
+    private AdapterMask pAdapter;
     private List<Mask> listPhone = new ArrayList<>();
 
-     */
-
-
-    Connection connection;
-    List<Mask> data;
     ListView listView;
-    AdapterMask pAdapter;
-
 
     EditText textSearch;
 
@@ -50,13 +44,17 @@ public class ConclusionList extends AppCompatActivity {
         setContentView(R.layout.activity_conclusion_list);
 
 
-        /*ListView ivProducts = findViewById(R.id.lvData);
+        ListView ivProducts = findViewById(R.id.lvData);
         pAdapter = new AdapterMask(ConclusionList.this, listPhone);
         ivProducts.setAdapter(pAdapter);
 
-         */
-
-
+        listView = findViewById(R.id.lvData);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Go((int)id);
+            }
+        });
 
         textSearch = findViewById(R.id.etSearch);
 
@@ -67,18 +65,16 @@ public class ConclusionList extends AppCompatActivity {
                 textSearch.setHint(R.string.enter_value);
         });
 
-        RequestExecution("Select * From Phones");
-        //new GetPhones().execute();
+        new GetPhones().execute();
     }
 
-/*
     private class GetPhones extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
 
-                URL url = new URL("http://ssfb.ngknn.local/NGKNN/ПигалевЕД/api/Phones");
+                URL url = new URL("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/Phones");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -104,7 +100,6 @@ public class ConclusionList extends AppCompatActivity {
                 JSONArray tempArray = new JSONArray(s);
                 for (int i = 0;i<tempArray.length();i++)
                 {
-
                     JSONObject productJson = tempArray.getJSONObject(i);
                     Mask tempProduct = new Mask(
                             productJson.getInt("id_phone"),
@@ -112,7 +107,7 @@ public class ConclusionList extends AppCompatActivity {
                             productJson.getString("model"),
                             productJson.getString("colour"),
                             (float) productJson.getDouble("price"),
-                            productJson.getString("price")
+                            productJson.getString("image")
                     );
                     listPhone.add(tempProduct);
                     pAdapter.notifyDataSetInvalidated();
@@ -124,58 +119,6 @@ public class ConclusionList extends AppCompatActivity {
             }
         }
     }
-    */
-
-    public void enterMobile() {
-        pAdapter.notifyDataSetInvalidated();
-        listView.setAdapter(pAdapter);
-    }
-    public void RequestExecution(String query) {
-        data = new ArrayList<Mask>();
-        listView = findViewById(R.id.lvData);
-        pAdapter = new AdapterMask(ConclusionList.this, data);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Go((int)id);
-            }
-        });
-        try {
-            BaseData baseData = new BaseData();
-            connection = baseData.connectionClass();
-            if (connection != null)
-            {
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-
-                while (resultSet.next())
-                {
-                    Mask tempMask = new Mask
-                            (resultSet.getInt("id_phone"),
-                                    resultSet.getString("manufacturer"),
-                                    resultSet.getString("model"),
-                                    resultSet.getString("colour"),
-                                    resultSet.getFloat("price"),
-                                    resultSet.getString("image")
-                            );
-                    data.add(tempMask);
-                    pAdapter.notifyDataSetInvalidated();
-                }
-                connection.close();
-            }
-            else
-            {
-
-            }
-        }
-        catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-        }
-        enterMobile();
-    }
-
-
 
     public void Go(int id)
     {

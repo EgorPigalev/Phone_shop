@@ -64,7 +64,7 @@ public class AdapterMask extends BaseAdapter {
         Model.setText(mask.getModel());
         Colour.setText(mask.getColour());
         Price.setText(mask.getPrice().toString());
-        if(mask.getImage() == null)
+        if(mask.getImage().toString().equals("null"))
         {
             Image.setImageResource(R.drawable.absence);
         }
