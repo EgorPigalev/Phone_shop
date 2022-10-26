@@ -73,7 +73,6 @@ public class ConclusionList extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-
                 URL url = new URL("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/Phones");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 

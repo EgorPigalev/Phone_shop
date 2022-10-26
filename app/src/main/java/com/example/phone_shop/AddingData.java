@@ -26,9 +26,14 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class AddingData extends AppCompatActivity {
 
-    Connection connection;
     EditText textManufacturer, textModel, textColour, textPrice;
     TextView deletePicture;
     ImageView image;
@@ -111,6 +116,7 @@ public class AddingData extends AppCompatActivity {
         });
     }
 
+    /*
     public void AddData(View v)
     {
         if(textManufacturer.getText().length() == 0 || textModel.getText().length() == 0 || textColour.getText().length() == 0 || textPrice.getText().length() == 0){
@@ -144,6 +150,52 @@ public class AddingData extends AppCompatActivity {
         {
             Toast.makeText(this, "При добавление данных в БД возникла ошибка", Toast.LENGTH_LONG).show();
         }
+    }
+
+     */
+    public void AddData(View v)
+    {
+        postData(textManufacturer.getText().toString(), textModel.getText().toString(), textColour.getText().toString(), textPrice.getText().toString(), varcharPicture);
+    }
+
+    private void postData(String manufacturer, String model, String colour, String price, String picture) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/Phones/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        DataModal modal = new DataModal(manufacturer, model, colour, Float.parseFloat(price), picture);
+
+        Call<DataModal> call = retrofitAPI.createPost(modal);
+
+        call.enqueue(new Callback<DataModal>() {
+            @Override
+            public void onResponse(Call<DataModal> call, Response<DataModal> response) {
+
+                Toast.makeText(AddingData.this, "Запись успешно добавлена в базу", Toast.LENGTH_LONG).show();
+                textManufacturer.setText("");
+                textModel.setText("");
+                textColour.setText("");
+                textPrice.setText("");
+                image.setImageResource(R.drawable.absence);
+                deletePicture.setVisibility(View.INVISIBLE);
+
+                DataModal responseFromAPI = response.body();
+
+                // on below line we are getting our data from modal class and adding it to our string.
+                //String responseString = "Response Code : " + response.code() + "\nName : " + responseFromAPI.getName() + "\n" + "Job : " + responseFromAPI.getJob();
+
+            }
+
+            @Override
+            public void onFailure(Call<DataModal> call, Throwable t) {
+                // setting text to our text view when
+                // we get error response from API.
+
+            }
+        });
     }
 
     public void Back(View view)
