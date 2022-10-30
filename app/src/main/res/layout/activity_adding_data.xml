@@ -102,9 +102,20 @@
         android:text="@string/delete_picture"
         android:textAlignment="center"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/pbLoading"
+        app:layout_constraintTop_toBottomOf="@+id/ivPicture" />
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tvdeletePicture"
         app:layout_constraintBottom_toTopOf="@+id/btnAdd"
-        app:layout_constraintTop_toBottomOf="@+id/ivPicture"
-        tools:layout_editor_absoluteX="10dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAdd"

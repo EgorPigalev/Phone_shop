@@ -106,9 +106,20 @@
         android:text="@string/delete_picture"
         android:textAlignment="center"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/pbLoading"
+        app:layout_constraintTop_toBottomOf="@+id/ivPicture"/>
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeletePicture"
         app:layout_constraintBottom_toTopOf="@+id/buttonChanging"
-        app:layout_constraintTop_toBottomOf="@+id/ivPicture"
-        tools:layout_editor_absoluteX="10dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        />
 
     <TableRow
         android:id="@+id/buttonChanging"
@@ -136,6 +147,7 @@
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:background="@drawable/button_background"
+
             android:onClick="deleteLine"
             android:text="@string/delete" />
     </TableRow>

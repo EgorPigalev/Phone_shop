@@ -12,27 +12,33 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SingleEntryChange extends AppCompatActivity {
 
-    Connection connection;
-    Integer index;
+    int index;
     EditText textManufacturer, textModel, textColour, textPrice;
     ImageView image;
     TextView deletePicture;
+    String varcharPicture;
+    ProgressBar loadingPB;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -55,8 +61,7 @@ public class SingleEntryChange extends AppCompatActivity {
                         imageView.setImageBitmap(bitmap);
                         TextView deletePicture = findViewById(R.id.tvDeletePicture);
                         deletePicture.setVisibility(View.VISIBLE);
-                        String varcharPicture = BitMapToString(bitmap);
-                        addPicture(varcharPicture);
+                        varcharPicture = BitMapToString(bitmap);
                     }
                 }
             });
@@ -70,30 +75,6 @@ public class SingleEntryChange extends AppCompatActivity {
         return temp;
     }
 
-    public void addPicture(String varcharPicture)
-    {
-        try
-        {
-            BaseData baseData = new BaseData();
-            connection = baseData.connectionClass();
-            if(connection != null) {
-                String query;
-                if(varcharPicture == ""){
-                    query = "Update Phones Set image = null where id_phone = " + index;
-                }
-                else{
-                    query = "Update Phones Set image = '" + varcharPicture + "' where id_phone = " + index;
-                }
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(query);
-            }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(this, "При добавление картинки возникла ошибка!", Toast.LENGTH_LONG).show();
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +86,7 @@ public class SingleEntryChange extends AppCompatActivity {
         textPrice = findViewById(R.id.etPrice);
         image = findViewById(R.id.ivPicture);
         deletePicture = findViewById(R.id.tvDeletePicture);
+        loadingPB = findViewById(R.id.pbLoading);
 
         textManufacturer.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus)
@@ -143,46 +125,47 @@ public class SingleEntryChange extends AppCompatActivity {
         startActivity(new Intent(this, ConclusionList.class));
     }
 
+
     public void GetData()
     {
-        textManufacturer = findViewById(R.id.etManufacturer);
-        textModel = findViewById(R.id.etModel);
-        textColour = findViewById(R.id.etColour);
-        textPrice = findViewById(R.id.etPrice);
-        deletePicture = findViewById(R.id.tvDeletePicture);
-        image = findViewById(R.id.ivPicture);
-        try
-        {
-            BaseData baseData = new BaseData();
-            connection = baseData.connectionClass();
-            if(connection != null) {
-                String query = "Select * From Phones where id_phone = " + index;
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                while (resultSet.next())
+        loadingPB.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<DataModal> call = retrofitAPI.getDATA(index);
+        call.enqueue(new Callback<DataModal>() {
+            @Override
+            public void onResponse(Call<DataModal> call, Response<DataModal> response) {
+                loadingPB.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
                 {
-                    textManufacturer.setText(resultSet.getString(2).replaceAll("\\s+",""));
-                    textModel.setText(resultSet.getString(3).replaceAll("\\s+",""));
-                    textColour.setText(resultSet.getString(4).replaceAll("\\s+",""));
-                    textPrice.setText(resultSet.getString(5));
-                    if(resultSet.getString(6) == null)
-                    {
-                        image.setImageResource(R.drawable.absence);
-                        deletePicture.setVisibility(View.INVISIBLE);
-                    }
-                    else
-                    {
-                        Bitmap bitmap = StringToBitMap(resultSet.getString(6));
-                        image.setImageBitmap(bitmap);
-                        deletePicture.setVisibility(View.VISIBLE);
-                    }
+                    Toast.makeText(SingleEntryChange.this, "При выводе данных возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                textManufacturer.setText(response.body().getManufacturer());
+                textModel.setText(response.body().getModel());
+                textColour.setText(response.body().getColour());
+                textPrice.setText(response.body().getPrice().toString());
+                if(response.body().getImage() == null)
+                {
+                    image.setImageResource(R.drawable.absence);
+                    deletePicture.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    Bitmap bitmap = StringToBitMap(response.body().getImage());
+                    image.setImageBitmap(bitmap);
+                    deletePicture.setVisibility(View.VISIBLE);
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(this, "При выводе данных произошла ошибка", Toast.LENGTH_LONG).show();
-        }
+            @Override
+            public void onFailure(Call<DataModal> call, Throwable t) {
+                Toast.makeText(SingleEntryChange.this, "При выводе данных возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                loadingPB.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     public Bitmap StringToBitMap(String encodedString) {
@@ -196,53 +179,77 @@ public class SingleEntryChange extends AppCompatActivity {
         }
     }
 
-    public void deleteLine(View v)
-    {
-        try
-        {
-            BaseData baseData = new BaseData();
-            connection = baseData.connectionClass();
-            if(connection != null) {
-                String query = "Delete From Phones where id_phone = " + index;
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(query);
-            }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(this, "При удаление данных возникла ошибка", Toast.LENGTH_LONG).show();
-        }
-        Back(v);
-    }
-
     public void updateLine(View v)
     {
-        textManufacturer = findViewById(R.id.etManufacturer);
-        textModel = findViewById(R.id.etModel);
-        textColour = findViewById(R.id.etColour);
-        textPrice = findViewById(R.id.etPrice);
-        deletePicture = findViewById(R.id.tvDeletePicture);
-        image = findViewById(R.id.ivPicture);
-        if(textManufacturer.getText().length() == 0 || textModel.getText().length() == 0 || textColour.getText().length() == 0 || textPrice.getText().length() == 0)
-        {
+        if(textManufacturer.getText().length() == 0 || textModel.getText().length() == 0 || textColour.getText().length() == 0 || textPrice.getText().length() == 0){
             Toast.makeText(this, "Все поля должны быть заполнены", Toast.LENGTH_LONG).show();
             return;
         }
-        try
-        {
-            BaseData baseData = new BaseData();
-            connection = baseData.connectionClass();
-            if(connection != null) {
-                String query = "Update Phones Set manufacturer = '" + textManufacturer.getText() + "', model = '" + textModel.getText() + "', colour = '" + textColour.getText() + "', price = '" + textPrice.getText() + "' where id_phone = " + index;
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(query);
-            }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(this, "При изменение данных в БД возникла ошибка", Toast.LENGTH_LONG).show();
-        }
+        callPUTDataMethod(textManufacturer.getText().toString(), textModel.getText().toString(), textColour.getText().toString(), textPrice.getText().toString(), varcharPicture);
+    }
+
+    public void deleteLine(View v)
+    {
+        callDeleteDataMethod();
+        SystemClock.sleep(200);
         Back(v);
+    }
+
+    private void callDeleteDataMethod() {
+
+        loadingPB.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call call = retrofitAPI.deleteData(index);
+        call.enqueue(new Callback<DataModal>() {
+            @Override
+            public void onResponse(Call<DataModal> call, Response<DataModal> response) {
+                loadingPB.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(SingleEntryChange.this, "При удание записи возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(SingleEntryChange.this, "Удаление прошло успешно", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<DataModal> call, Throwable t) {
+                Toast.makeText(SingleEntryChange.this, "При удаление записи возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                loadingPB.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void callPUTDataMethod(String manufacturer, String model, String colour, String price, String picture) {
+
+        loadingPB.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        DataModal modal = new DataModal(manufacturer, model, colour, Float.parseFloat(price), picture);
+        Call<DataModal> call = retrofitAPI.updateData(index, modal);
+        call.enqueue(new Callback<DataModal>() {
+            @Override
+            public void onResponse(Call<DataModal> call, Response<DataModal> response) {
+                loadingPB.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(SingleEntryChange.this, "При изменение данных возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(SingleEntryChange.this, "Данные изменены", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<DataModal> call, Throwable t) {
+                Toast.makeText(SingleEntryChange.this, "При изменение записи возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                loadingPB.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     public void updatePicture(View v)
@@ -256,7 +263,7 @@ public class SingleEntryChange extends AppCompatActivity {
     {
         ImageView picture = (ImageView) findViewById(R.id.ivPicture);
         picture.setImageBitmap(null);
-        addPicture("");
+        varcharPicture = null;
         TextView deletePicture = findViewById(R.id.tvDeletePicture);
         picture.setImageResource(R.drawable.absence);
         deletePicture.setVisibility(View.INVISIBLE);

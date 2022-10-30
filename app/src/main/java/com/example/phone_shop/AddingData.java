@@ -16,15 +16,12 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +35,7 @@ public class AddingData extends AppCompatActivity {
     TextView deletePicture;
     ImageView image;
     String varcharPicture;
+    ProgressBar loadingPB;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -85,6 +83,7 @@ public class AddingData extends AppCompatActivity {
         textPrice = findViewById(R.id.etPrice);
         image = findViewById(R.id.ivPicture);
         deletePicture = findViewById(R.id.tvdeletePicture);
+        loadingPB = findViewById(R.id.pbLoading);
         varcharPicture = null;
 
         textManufacturer.setOnFocusChangeListener((v, hasFocus) -> {
@@ -116,52 +115,21 @@ public class AddingData extends AppCompatActivity {
         });
     }
 
-    /*
     public void AddData(View v)
     {
         if(textManufacturer.getText().length() == 0 || textModel.getText().length() == 0 || textColour.getText().length() == 0 || textPrice.getText().length() == 0){
             Toast.makeText(this, "Все поля должны быть заполнены", Toast.LENGTH_LONG).show();
             return;
         }
-        try
-        {
-            BaseData baseData = new BaseData();
-            connection = baseData.connectionClass();
-            if(connection != null) {
-                String query = "";
-                if(varcharPicture == null){
-                    query = "Insert into Phones(manufacturer, model, colour, price) Values('" + textManufacturer.getText() + "', '" + textModel.getText() + "', '" + textColour.getText() + "', '" + textPrice.getText() + "')";
-                }
-                else{
-                    query = "Insert into Phones(manufacturer, model, colour, price, image) Values('" + textManufacturer.getText() + "', '" + textModel.getText() + "', '" + textColour.getText() + "', '" + textPrice.getText() + "', '" + varcharPicture + "')";
-                }
-                Statement statement = connection.createStatement();
-                statement.executeUpdate(query);
-                Toast.makeText(this, "Запись успешно добавлена в базу", Toast.LENGTH_LONG).show();
-                textManufacturer.setText("");
-                textModel.setText("");
-                textColour.setText("");
-                textPrice.setText("");
-                image.setImageResource(R.drawable.absence);
-                deletePicture.setVisibility(View.INVISIBLE);
-            }
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(this, "При добавление данных в БД возникла ошибка", Toast.LENGTH_LONG).show();
-        }
-    }
-
-     */
-    public void AddData(View v)
-    {
         postData(textManufacturer.getText().toString(), textModel.getText().toString(), textColour.getText().toString(), textPrice.getText().toString(), varcharPicture);
     }
 
     private void postData(String manufacturer, String model, String colour, String price, String picture) {
 
+        loadingPB.setVisibility(View.VISIBLE);
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/Phones/")
+                .baseUrl("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
@@ -173,27 +141,24 @@ public class AddingData extends AppCompatActivity {
         call.enqueue(new Callback<DataModal>() {
             @Override
             public void onResponse(Call<DataModal> call, Response<DataModal> response) {
-
+                deletePicture.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(AddingData.this, "При изменение данных возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Toast.makeText(AddingData.this, "Запись успешно добавлена в базу", Toast.LENGTH_LONG).show();
+                loadingPB.setVisibility(View.INVISIBLE);
                 textManufacturer.setText("");
                 textModel.setText("");
                 textColour.setText("");
                 textPrice.setText("");
                 image.setImageResource(R.drawable.absence);
-                deletePicture.setVisibility(View.INVISIBLE);
-
-                DataModal responseFromAPI = response.body();
-
-                // on below line we are getting our data from modal class and adding it to our string.
-                //String responseString = "Response Code : " + response.code() + "\nName : " + responseFromAPI.getName() + "\n" + "Job : " + responseFromAPI.getJob();
-
             }
-
             @Override
             public void onFailure(Call<DataModal> call, Throwable t) {
-                // setting text to our text view when
-                // we get error response from API.
-
+                Toast.makeText(AddingData.this, "При добавление записи возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                loadingPB.setVisibility(View.INVISIBLE);
             }
         });
     }
