@@ -117,7 +117,7 @@ public class SingleEntryChange extends AppCompatActivity {
         });
         Bundle arguments = getIntent().getExtras();
         index = arguments.getInt("key");
-        GetData();
+        callGetDataMethod();
     }
 
     public void Back(View view)
@@ -126,7 +126,7 @@ public class SingleEntryChange extends AppCompatActivity {
     }
 
 
-    public void GetData()
+    public void callGetDataMethod()
     {
         loadingPB.setVisibility(View.VISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
@@ -155,6 +155,7 @@ public class SingleEntryChange extends AppCompatActivity {
                 }
                 else
                 {
+                    varcharPicture = response.body().getImage();
                     Bitmap bitmap = StringToBitMap(response.body().getImage());
                     image.setImageBitmap(bitmap);
                     deletePicture.setVisibility(View.VISIBLE);
@@ -191,8 +192,6 @@ public class SingleEntryChange extends AppCompatActivity {
     public void deleteLine(View v)
     {
         callDeleteDataMethod();
-        SystemClock.sleep(200);
-        Back(v);
     }
 
     private void callDeleteDataMethod() {
@@ -214,6 +213,7 @@ public class SingleEntryChange extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(SingleEntryChange.this, "Удаление прошло успешно", Toast.LENGTH_SHORT).show();
+
             }
             @Override
             public void onFailure(Call<DataModal> call, Throwable t) {
@@ -221,6 +221,8 @@ public class SingleEntryChange extends AppCompatActivity {
                 loadingPB.setVisibility(View.INVISIBLE);
             }
         });
+        SystemClock.sleep(500);
+        startActivity(new Intent(this, ConclusionList.class));
     }
 
     private void callPUTDataMethod(String manufacturer, String model, String colour, String price, String picture) {

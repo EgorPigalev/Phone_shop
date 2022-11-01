@@ -141,7 +141,6 @@ public class AddingData extends AppCompatActivity {
         call.enqueue(new Callback<DataModal>() {
             @Override
             public void onResponse(Call<DataModal> call, Response<DataModal> response) {
-                deletePicture.setVisibility(View.INVISIBLE);
                 if(!response.isSuccessful())
                 {
                     Toast.makeText(AddingData.this, "При изменение данных возникла ошибка", Toast.LENGTH_SHORT).show();
@@ -153,6 +152,8 @@ public class AddingData extends AppCompatActivity {
                 textModel.setText("");
                 textColour.setText("");
                 textPrice.setText("");
+                deletePicture.setVisibility(View.INVISIBLE);
+                varcharPicture = null;
                 image.setImageResource(R.drawable.absence);
             }
             @Override
