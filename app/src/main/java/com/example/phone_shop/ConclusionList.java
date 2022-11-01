@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ public class ConclusionList extends AppCompatActivity {
     private List<Mask> listPhone = new ArrayList<>();
 
     ListView listView;
-
+    ProgressBar pbLoading;
     EditText textSearch;
 
     @Override
@@ -36,10 +37,12 @@ public class ConclusionList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conclusion_list);
 
+        pbLoading = findViewById(R.id.pbLoading);
 
         ListView ivProducts = findViewById(R.id.lvData);
         pAdapter = new AdapterMask(ConclusionList.this, listPhone);
         ivProducts.setAdapter(pAdapter);
+
 
         listView = findViewById(R.id.lvData);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -57,7 +60,6 @@ public class ConclusionList extends AppCompatActivity {
             else
                 textSearch.setHint(R.string.enter_value);
         });
-
         new GetPhones().execute();
     }
 
@@ -104,6 +106,7 @@ public class ConclusionList extends AppCompatActivity {
                     listPhone.add(tempProduct);
                     pAdapter.notifyDataSetInvalidated();
                 }
+                pbLoading.setVisibility(View.GONE);
             }
             catch (Exception ignored)
             {
