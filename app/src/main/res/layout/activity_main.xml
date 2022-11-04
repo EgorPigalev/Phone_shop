@@ -59,7 +59,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/button_background"
         android:onClick="DeleteBase"
-        android:text="Очистить базу данных"
+        android:text="@string/clearBasaData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnUpd" />

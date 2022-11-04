@@ -5,13 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,6 +37,8 @@ public class ConclusionList extends AppCompatActivity {
     ListView listView;
     ProgressBar pbLoading;
     EditText textSearch;
+    TextView tvDeleteSearch;
+    Spinner chingSearch, sorting, order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,10 @@ public class ConclusionList extends AppCompatActivity {
         ivProducts.setAdapter(pAdapter);
 
 
+        tvDeleteSearch = findViewById(R.id.tvDeleteSearch);
+        chingSearch = findViewById(R.id.chingSearch);
+        sorting = findViewById(R.id.sorting);
+        order = findViewById(R.id.order);
         listView = findViewById(R.id.lvData);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -61,14 +73,106 @@ public class ConclusionList extends AppCompatActivity {
                 textSearch.setHint(R.string.enter_value);
         });
         new GetPhones().execute();
+        textSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                new GetPhones().execute();
+                if(textSearch.getText().length() != 0 || !sorting.getSelectedItem().toString().equals(""))
+                {
+                    tvDeleteSearch.setVisibility(View.VISIBLE);
+                }
+                else{
+                    tvDeleteSearch.setVisibility(View.GONE);
+                }
+            }
+        });
+        sorting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                new GetPhones().execute();
+                if(!sorting.getSelectedItem().toString().equals(""))
+                {
+                    tvDeleteSearch.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+        order.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                new GetPhones().execute();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+        chingSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                new GetPhones().execute();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
     }
+
+    public String fild(String str)
+    {
+        if(str.equals("Фирма")){
+            return "manufacturer";
+        }
+        else if(str.equals("Модель")){
+            return  "model";
+        }
+        else if(str.equals("Цвет"))
+        {
+            return "colour";
+        }
+        else if(str.equals("Цена")){
+            return "price";
+        }
+        else{
+            return null;
+        }
+    }
+
+    public String order(String str){
+        if(str.equals("Возрастание")){
+            return "возрастание";
+        }
+        else{
+            return "убывание";
+        }
+    }
+
 
     private class GetPhones extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/Phones");
+                String textChingSearch = fild(chingSearch.getSelectedItem().toString());
+                String textSorting = fild(sorting.getSelectedItem().toString());
+                String textOrder = order(order.getSelectedItem().toString());
+                URL url = new URL("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/Phones?fieldSearch=" + textChingSearch +"&textSearch=" + textSearch.getText() +"&fieldSort=" + textSorting +"&valueSort=" + textOrder);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -91,6 +195,8 @@ public class ConclusionList extends AppCompatActivity {
             super.onPostExecute(s);
             try
             {
+                listPhone.clear();
+                pAdapter.notifyDataSetInvalidated();
                 JSONArray tempArray = new JSONArray(s);
                 for (int i = 0;i<tempArray.length();i++)
                 {
@@ -145,5 +251,14 @@ public class ConclusionList extends AppCompatActivity {
             btnSearch.setText(R.string.filter_open);
             tlSearch.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void deleteSearch(View v)
+    {
+        textSearch.setText("");
+        chingSearch.setSelection(0);
+        sorting.setSelection(0);
+        order.setSelection(0);
+        tvDeleteSearch.setVisibility(View.GONE);
     }
 }

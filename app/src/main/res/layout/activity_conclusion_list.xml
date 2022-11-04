@@ -68,7 +68,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner"
-                android:contentDescription="Сортировка"
+                android:contentDescription="@string/search"
                 android:entries="@array/fieldsNameSearch" />
 
             <EditText
@@ -101,49 +101,23 @@
             android:layout_weight="1">
 
             <Spinner
-                android:id="@+id/sorting1"
+                android:id="@+id/sorting"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner"
-                android:contentDescription="Сортировка_параметр1"
+                android:contentDescription="@string/sorting"
                 android:entries="@array/fieldsName" />
 
             <Spinner
-                android:id="@+id/order1"
+                android:id="@+id/order"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/spinner"
-                android:contentDescription="Сортировка_параметр1"
-                android:entries="@array/order" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_margin="5dp"
-            android:layout_weight="1">
-
-            <Spinner
-                android:id="@+id/sorting2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner"
-                android:contentDescription="Сортировка_параметр2"
-                android:entries="@array/fieldsName" />
-
-            <Spinner
-                android:id="@+id/order2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner"
-                android:contentDescription="Сортировка_параметр2"
+                android:contentDescription="@string/sorting"
                 android:entries="@array/order" />
 
         </TableRow>
@@ -157,6 +131,7 @@
         android:visibility="gone"
         android:layout_margin="5dp"
         android:textAlignment="center"
+        android:onClick="deleteSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tlSearch"/>
