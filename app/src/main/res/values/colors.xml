@@ -11,4 +11,5 @@
     <color name="colarDark">#A46F3B</color>
     <color name="colarButton">#FDD9B5</color>
     <color name="colarButtonActive">#D8B490</color>
+    <color name="colorBattonExit">#E3B88F</color>
 </resources>
