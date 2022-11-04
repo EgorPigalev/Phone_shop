@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:background="@drawable/spinner"
                 android:contentDescription="@string/search"
                 android:entries="@array/fieldsNameSearch" />
@@ -106,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:background="@drawable/spinner"
                 android:contentDescription="@string/sorting"
                 android:entries="@array/fieldsName" />
@@ -116,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 android:background="@drawable/spinner"
                 android:contentDescription="@string/sorting"
                 android:entries="@array/order" />

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colarButton"/>
+    <solid android:color="@color/colar"/>
     <padding
         android:left="15dp"
         android:right="15dp"
         />
     <corners android:radius="40dp"/>
-    <stroke android:color="@color/colarDark"
+    <stroke android:color="@color/colarButtonActive"
         android:width="1dp"
         />
 </shape>
