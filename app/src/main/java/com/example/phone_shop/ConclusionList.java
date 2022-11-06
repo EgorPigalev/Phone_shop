@@ -172,7 +172,7 @@ public class ConclusionList extends AppCompatActivity {
                 String textChingSearch = fild(chingSearch.getSelectedItem().toString());
                 String textSorting = fild(sorting.getSelectedItem().toString());
                 String textOrder = order(order.getSelectedItem().toString());
-                URL url = new URL("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/Phones?fieldSearch=" + textChingSearch +"&textSearch=" + textSearch.getText() +"&fieldSort=" + textSorting +"&valueSort=" + textOrder);
+                URL url = new URL("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/Phones?fieldSearch=" + textChingSearch +"&textSearch=" + textSearch.getText() +"&fieldSort=" + textSorting +"&valueSort=" + textOrder);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));

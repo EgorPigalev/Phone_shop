@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadingPB.setVisibility(View.VISIBLE);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://ngknn.ru:5101/NGKNN/ПигалевЕД/api/")
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
