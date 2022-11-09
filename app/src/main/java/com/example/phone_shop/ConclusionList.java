@@ -17,8 +17,6 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationBarView;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -130,7 +128,6 @@ public class ConclusionList extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
-
         });
     }
 
@@ -156,10 +153,10 @@ public class ConclusionList extends AppCompatActivity {
 
     public String order(String str){
         if(str.equals("Возрастание")){
-            return "возрастание";
+            return "ascending";
         }
         else{
-            return "убывание";
+            return "descending";
         }
     }
 
